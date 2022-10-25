@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Models;
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
@@ -49,5 +50,20 @@ class PostsTest extends TestCase
 
         $this->assertInstanceOf(Tag::class, $post->tags->first());
         $this->assertCount($count, $post->tags);
+    }
+
+    /**
+     * Posts has many Comments.
+     *
+     * @return void
+     */
+    public function test_post_has_many_comments()
+    {
+        $count = rand(1, 10);
+
+        $post = Post::factory()->hasComments($count)->create();
+
+        $this->assertInstanceOf(Comment::class, $post->comments->first());
+        $this->assertCount($count, $post->comments);
     }
 }
