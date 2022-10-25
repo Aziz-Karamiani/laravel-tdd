@@ -4,23 +4,20 @@ namespace Tests\Feature\Models;
 
 use App\Models\Comment;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class CommentTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, ModelHelper;
 
     /**
-     * A basic feature test example.
-     *
-     * @return void
+     * @return Model
      */
-    public function test_insert_comment()
+    protected function model(): Model
     {
-        $comment = Comment::factory()->create();
-
-        $this->assertDatabaseHas('comments', $comment->toArray());
+        return new Comment();
     }
 
     public function test_comment_belongs_to_post()

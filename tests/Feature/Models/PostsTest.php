@@ -6,25 +6,21 @@ use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class PostsTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, ModelHelper;
 
     /**
-     * A basic feature test example.
-     *
-     * @return void
+     * @return Model
      */
-    public function test_insert_post()
+    protected function model(): Model
     {
-        $post = Post::factory()->create();
-
-        $this->assertDatabaseHas('posts', $post->toArray());
+        return new Post();
     }
-
 
     /**
      * Post belongs to only one user.

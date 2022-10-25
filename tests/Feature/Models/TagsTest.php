@@ -3,25 +3,21 @@
 namespace Tests\Feature\Models;
 
 use App\Models\Post;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use App\Models\Tag;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class TagsTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, ModelHelper;
 
     /**
-     * A basic feature test example.
-     *
-     * @return void
+     * @return Model
      */
-    public function test_example()
+    protected function model(): Model
     {
-        $tag = Tag::factory()->create();
-
-        $this->assertDatabaseHas('tags', $tag->toArray());
+        return new Tag();
     }
 
 

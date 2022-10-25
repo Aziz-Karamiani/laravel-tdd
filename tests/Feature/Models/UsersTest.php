@@ -4,23 +4,20 @@ namespace Tests\Feature\Models;
 
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class UsersTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, ModelHelper;
 
     /**
-     * A basic feature test example.
-     *
-     * @return void
+     * @return Model
      */
-    public function test_insert_user()
+    protected function model(): Model
     {
-        $user = User::factory()->create();
-
-        $this->assertDatabaseHas('users', $user->toArray());
+        return new User();
     }
 
 
