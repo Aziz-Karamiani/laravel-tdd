@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class PostsCommentsController extends Controller
@@ -11,7 +11,7 @@ class PostsCommentsController extends Controller
     /**
      * @param Request $request
      * @param Post $post
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function store(Request $request, Post $post)
     {
