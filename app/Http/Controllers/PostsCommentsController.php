@@ -11,7 +11,7 @@ class PostsCommentsController extends Controller
     /**
      * @param Request $request
      * @param Post $post
-     * @return RedirectResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request, Post $post)
     {
@@ -20,6 +20,6 @@ class PostsCommentsController extends Controller
             'text' => $request->input('text'),
         ]);
 
-        return redirect()->route('posts.show', ['post' => $post->id]);
+        return response()->json(['created' => true]);
     }
 }

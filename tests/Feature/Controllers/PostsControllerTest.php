@@ -51,9 +51,9 @@ class PostsControllerTest extends TestCase
 
         $this->actingAs($user);
 
-        $response = $this->post(route('posts.comments.store', ['post' => $post->id]), ['text' => $data['text']]);
+        $response = $this->postJson(route('posts.comments.store', ['post' => $post->id]), ['text' => $data['text']]);
 
-        $response->assertRedirect(route('posts.show', ['post' => $post->id]));
+        $response->assertJson(['created' => true]);
         $this->assertDatabaseHas('comments', $data);
     }
 
@@ -72,9 +72,9 @@ class PostsControllerTest extends TestCase
             ->make()
             ->toArray();
 
-        $response = $this->post(route('posts.comments.store', ['post' => $post->id]), ['text' => $data['text']]);
+        $response = $this->postJson(route('posts.comments.store', ['post' => $post->id]), ['text' => $data['text']]);
 
-        $response->assertRedirect(route('login'));
+        $response->assertUnauthorized();
         $this->assertDatabaseMissing('comments', $data);
     }
 
