@@ -15,6 +15,8 @@ class PostsCommentsController extends Controller
      */
     public function store(Request $request, Post $post)
     {
+        $request->validate(['text' => 'required']);
+
         $post->comments()->create([
             'user_id' => auth()->id(),
             'text' => $request->input('text'),

@@ -78,4 +78,27 @@ class PostsControllerTest extends TestCase
         $this->assertDatabaseMissing('comments', $data);
     }
 
+    /**
+     * Comment text validation.
+     */
+    public function test_authenticated_user_can_comment_on_post_validation()
+    {
+        $post = Post::factory()->create();
+        $user = User::factory()->create();
+
+        $data = Comment::factory()
+            ->state([
+                'user_id' => $user->id,
+                'commentable_id' => $post->id,
+                'text' => ''
+            ])
+            ->make()
+            ->toArray();
+
+        $this->actingAs($user);
+
+        $response = $this->postJson(route('posts.comments.store', ['post' => $post->id]), ['text' => $data['text']]);
+
+        $response->assertJsonValidationErrors(['text' => 'The text field is required.']);
+    }
 }
