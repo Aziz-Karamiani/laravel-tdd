@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -14,21 +15,25 @@ class PostsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return void
+     * @return Application|Factory|View
      */
     public function index()
     {
-        //
+        $posts = Post::latest()->paginate(15);
+
+        return view('posts.index', compact('posts'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return Application|Factory|View
      */
-    public function create(): Response
+    public function create(): Application|Factory|View
     {
-        //
+        $tags = Tag::all();
+
+        return view('posts.create', compact('tags'));
     }
 
     /**
