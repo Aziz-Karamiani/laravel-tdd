@@ -32,7 +32,7 @@ class PostsControllerTest extends TestCase
      *
      * @return void
      */
-    public function test_posts_posts_method()
+    public function test_posts_create_method()
     {
         Tag::factory()->count(20)->create();
 
@@ -40,5 +40,24 @@ class PostsControllerTest extends TestCase
             ->assertOk()
             ->assertViewIs('posts.create')
             ->assertViewHas('tags', Tag::all());
+    }
+
+    /**
+     * Posts edit method.
+     *
+     * @return void
+     */
+    public function test_posts_edit_method()
+    {
+        Tag::factory()->count(20)->create();
+        $post = Post::factory()->create();
+
+        $this->get(route('posts.edit', $post->id))
+            ->assertOk()
+            ->assertViewIs('posts.edit')
+            ->assertViewHasAll([
+                'tags' => Tag::all(),
+                'post' => $post
+            ]);
     }
 }

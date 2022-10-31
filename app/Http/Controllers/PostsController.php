@@ -62,12 +62,14 @@ class PostsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     * @return void
+     * @param Post $post
+     * @return Application|Factory|View
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        $tags = Tag::all();
+
+        return view('posts.edit', compact('tags', 'post'));
     }
 
     /**
