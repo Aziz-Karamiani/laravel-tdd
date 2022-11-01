@@ -4,6 +4,7 @@ namespace Tests\Feature\Controllers\Admin;
 
 use App\Models\Post;
 use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -19,6 +20,9 @@ class PostsControllerTest extends TestCase
      */
     public function test_posts_index_method()
     {
+        $user = User::factory()->admin()->create();
+        $this->actingAs($user);
+
         Post::factory()->times(100)->create();
 
         $this->get(route('posts.index'))
@@ -34,6 +38,9 @@ class PostsControllerTest extends TestCase
      */
     public function test_posts_create_method()
     {
+        $user = User::factory()->admin()->create();
+        $this->actingAs($user);
+
         Tag::factory()->count(20)->create();
 
         $this->get(route('posts.create'))
@@ -49,6 +56,9 @@ class PostsControllerTest extends TestCase
      */
     public function test_posts_edit_method()
     {
+        $user = User::factory()->admin()->create();
+        $this->actingAs($user);
+
         Tag::factory()->count(20)->create();
         $post = Post::factory()->create();
 

@@ -17,7 +17,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index']);
-Route::resource('posts', PostsController::class);
+Route::resource('posts', PostsController::class)->except('show')->middleware('admin');
+Route::get('posts/{post}', [PostsController::class, 'show'])->name('posts.show');
 Route::resource('posts.comments', PostsCommentsController::class)->middleware('auth');
 
 Auth::routes();
