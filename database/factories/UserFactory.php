@@ -38,4 +38,29 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+
+    /**
+     * Indicate that the model's type is user.
+     *
+     * @return static
+     */
+    public function user()
+    {
+        return $this->state(fn (array $attributes) => [
+            'type' => 'user',
+        ]);
+    }
+
+
+    /**
+     * Indicate that the model's type is admin.
+     *
+     * @return static
+     */
+    public function admin()
+    {
+        return $this->state(fn (array $attributes) => [
+            'type' => 'admin',
+        ]);
+    }
 }
