@@ -12,6 +12,8 @@ class PostsControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected array $middleware = ['web', 'admin'];
+
     /**
      * Posts index method.
      *
@@ -29,7 +31,7 @@ class PostsControllerTest extends TestCase
             ->assertViewIs('posts.index')
             ->assertViewHas('posts', Post::latest()->paginate(15));
 
-        $this->assertEquals(['web', 'admin'], request()->route()->middleware());
+        $this->assertEquals($this->middleware, request()->route()->middleware());
     }
 
     /**
@@ -49,7 +51,7 @@ class PostsControllerTest extends TestCase
             ->assertViewIs('posts.create')
             ->assertViewHas('tags', Tag::all());
 
-        $this->assertEquals(['web', 'admin'], request()->route()->middleware());
+        $this->assertEquals($this->middleware, request()->route()->middleware());
     }
 
     /**
@@ -73,7 +75,7 @@ class PostsControllerTest extends TestCase
                 'post' => $post
             ]);
 
-        $this->assertEquals(['web', 'admin'], request()->route()->middleware());
+        $this->assertEquals($this->middleware, request()->route()->middleware());
     }
 
 
@@ -98,6 +100,6 @@ class PostsControllerTest extends TestCase
 
         $this->assertDatabaseHas('posts', $data);
 
-        $this->assertEquals(['web', 'admin'], request()->route()->middleware());
+        $this->assertEquals($this->middleware, request()->route()->middleware());
     }
 }
