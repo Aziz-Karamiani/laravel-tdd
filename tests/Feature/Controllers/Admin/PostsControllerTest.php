@@ -79,7 +79,6 @@ class PostsControllerTest extends TestCase
     }
 
 
-
     /**
      * Posts store method.
      *
@@ -90,15 +89,20 @@ class PostsControllerTest extends TestCase
         $user = User::factory()->admin()->create();
         $tags = Tag::factory()->count(rand(1, 5))->create();
 
-        $data = Post::factory()->state(['user_id' => $user->id])->make()->toArray();
+        $data = Post::factory()
+            ->state(['user_id' => $user->id])
+            ->make()
+            ->toArray();
 
         $this->actingAs($user)
-            ->post(route('posts.store'), array_merge($tags->pluck('id')->toArray(), $data))
+            ->post(route('posts.store'), array_merge(
+                ['tags' => $tags->pluck('id')->toArray()], $data))
             ->assertRedirect()
             ->assertSessionHas('message', 'Post created successfully.');
 
 
-        $this->assertDatabaseHas('posts', $data);
+        $this->assertDatabaseHas('posts', $data)
+            ->assertEquals($tags->pluck('id')->toArray(), Post::where($data)->first()->tags()->pluck('id')->toArray());
 
         $this->assertEquals($this->middleware, request()->route()->middleware());
     }
