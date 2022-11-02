@@ -6,7 +6,6 @@ use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class PostsControllerTest extends TestCase
@@ -29,6 +28,8 @@ class PostsControllerTest extends TestCase
             ->assertOk()
             ->assertViewIs('posts.index')
             ->assertViewHas('posts', Post::latest()->paginate(15));
+
+        $this->assertEquals(['web', 'admin'], request()->route()->middleware());
     }
 
     /**
@@ -47,6 +48,8 @@ class PostsControllerTest extends TestCase
             ->assertOk()
             ->assertViewIs('posts.create')
             ->assertViewHas('tags', Tag::all());
+
+        $this->assertEquals(['web', 'admin'], request()->route()->middleware());
     }
 
     /**
@@ -69,6 +72,8 @@ class PostsControllerTest extends TestCase
                 'tags' => Tag::all(),
                 'post' => $post
             ]);
+
+        $this->assertEquals(['web', 'admin'], request()->route()->middleware());
     }
 
 
