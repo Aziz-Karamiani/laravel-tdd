@@ -70,4 +70,29 @@ class PostsControllerTest extends TestCase
                 'post' => $post
             ]);
     }
+
+
+
+    /**
+     * Posts store method.
+     *
+     * @return void
+     */
+    public function test_posts_store_method()
+    {
+        $user = User::factory()->admin()->create();
+        $tags = Tag::factory()->count(rand(1, 5))->create();
+
+        $data = Post::factory()->state(['user_id' => $user->id])->make()->toArray();
+
+        $this->actingAs($user)
+            ->post(route('posts.store'), array_merge($tags->pluck('id')->toArray(), $data))
+            ->assertRedirect()
+            ->assertSessionHas('message', 'Post created successfully.');
+
+
+        $this->assertDatabaseHas('posts', $data);
+
+        $this->assertEquals(['web', 'admin'], request()->route()->middleware());
+    }
 }

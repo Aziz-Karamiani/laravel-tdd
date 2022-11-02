@@ -7,6 +7,7 @@ use App\Models\Tag;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -40,11 +41,19 @@ class PostsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return void
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
-        //
+        $post = auth()->user()->posts()->create([
+           'title' => $request->input('title'),
+           'description' => $request->input('description'),
+           'image' => $request->input('image'),
+        ]);
+
+        $post->tags()->attach($request->input('tags'));
+
+        return redirect()->route('posts.index')->with('message', 'Post created successfully.');
     }
 
     /**
