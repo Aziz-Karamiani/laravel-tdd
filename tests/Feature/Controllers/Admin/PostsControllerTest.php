@@ -168,6 +168,8 @@ class PostsControllerTest extends TestCase
         $this->actingAs($user)
             ->put(route('posts.update', $post), $data)
             ->assertSessionHasErrors($errors);
+
+        $this->assertEquals($this->middleware, request()->route()->middleware());
     }
 
     /**
@@ -195,6 +197,8 @@ class PostsControllerTest extends TestCase
         $this->actingAs($user)
             ->put(route('posts.update', $post), $data)
             ->assertSessionHasErrors($errors);
+
+        $this->assertEquals($this->middleware, request()->route()->middleware());
     }
 
     /**
@@ -222,6 +226,8 @@ class PostsControllerTest extends TestCase
         $this->actingAs($user)
             ->put(route('posts.update', $post), $data)
             ->assertSessionHasErrors($errors);
+
+        $this->assertEquals($this->middleware, request()->route()->middleware());
     }
 
     /**
@@ -249,6 +255,8 @@ class PostsControllerTest extends TestCase
         $this->actingAs($user)
             ->put(route('posts.update', $post), $data)
             ->assertSessionHasErrors($errors);
+
+        $this->assertEquals($this->middleware, request()->route()->middleware());
     }
 
 
