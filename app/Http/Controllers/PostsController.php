@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Admin\PostsRequest as PostsRequest;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Contracts\Foundation\Application;
@@ -40,10 +41,10 @@ class PostsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param PostsRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(PostsRequest $request)
     {
         $post = auth()->user()->posts()->create([
            'title' => $request->input('title'),
@@ -84,11 +85,11 @@ class PostsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param PostsRequest $request
      * @param Post $post
      * @return RedirectResponse
      */
-    public function update(Request $request, Post $post)
+    public function update(PostsRequest $request, Post $post)
     {
         $post->update([
             'title' => $request->input('title'),

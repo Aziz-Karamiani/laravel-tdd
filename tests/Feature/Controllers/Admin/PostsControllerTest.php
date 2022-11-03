@@ -138,4 +138,35 @@ class PostsControllerTest extends TestCase
 
         $this->assertEquals($this->middleware, request()->route()->middleware());
     }
+
+
+    /**
+     * Post required validations.
+     */
+    public function test_post_request_required_validations()
+    {
+        $user = User::factory()->admin()->create();
+        $data = [];
+
+        $errors = [
+            "title" => 'The title field is required.',
+            "description" => 'The description field is required.',
+            "image" => 'The image field is required.',
+            "tags" => 'The tags field is required.'
+        ];
+
+        $post =  Post::factory()
+            ->state(['user_id' => $user->id])
+            ->create();
+
+        // store
+        $this->actingAs($user)
+            ->post(route('posts.store'), $data)
+            ->assertSessionHasErrors($errors);
+
+        // update
+        $this->actingAs($user)
+            ->put(route('posts.update', $post), $data)
+            ->assertSessionHasErrors($errors);
+    }
 }
