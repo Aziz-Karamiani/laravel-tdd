@@ -106,4 +106,36 @@ class PostsControllerTest extends TestCase
 
         $this->assertEquals($this->middleware, request()->route()->middleware());
     }
+
+    /**
+     * Posts update method.
+     *
+     * @return void
+     */
+    public function test_posts_update_method()
+    {
+        $user = User::factory()->admin()->create();
+        $tags = Tag::factory()->count(rand(1, 5))->create();
+
+        $data = Post::factory()
+            ->state(['user_id' => $user->id])
+            ->make()
+            ->toArray();
+
+        $post =  Post::factory()
+            ->state(['user_id' => $user->id])
+            ->create();
+
+        $this->actingAs($user)
+            ->put(route('posts.update', $post), array_merge(
+                ['tags' => $tags->pluck('id')->toArray()], $data))
+            ->assertRedirect()
+            ->assertSessionHas('message', 'Post updated successfully.');
+
+
+        $this->assertDatabaseHas('posts', array_merge(['id' => $post->id], $data))
+            ->assertEquals($tags->pluck('id')->toArray(), Post::where($data)->first()->tags()->pluck('id')->toArray());
+
+        $this->assertEquals($this->middleware, request()->route()->middleware());
+    }
 }

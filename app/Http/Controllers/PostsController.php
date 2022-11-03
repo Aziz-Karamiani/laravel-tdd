@@ -85,12 +85,20 @@ class PostsController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param int $id
-     * @return void
+     * @param Post $post
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $post->update([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'image' => $request->input('image'),
+        ]);
+
+        $post->tags()->sync($request->input('tags'));
+
+        return redirect()->route('posts.index')->with('message', 'Post updated successfully.');
     }
 
     /**
