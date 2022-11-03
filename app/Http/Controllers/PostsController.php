@@ -103,11 +103,14 @@ class PostsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     * @return void
+     * @param Post $post
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post->tags()->detach();
+        $post->comments()->delete();
+        $post->delete();
+        return redirect()->route('posts.index')->with('message', 'Post deleted successfully.');
     }
 }
