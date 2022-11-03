@@ -27,7 +27,9 @@ class PostsRequest extends FormRequest
             "title" => 'required',
             "description" => 'required|min:5',
             "image" => 'required',
-            "tags" => 'required|array'
+            "tags" => 'required|array',
+            "tags.*" => 'exists:tags,id',
+
         ];
     }
 }

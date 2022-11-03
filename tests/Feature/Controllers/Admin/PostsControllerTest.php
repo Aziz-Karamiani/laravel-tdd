@@ -200,13 +200,40 @@ class PostsControllerTest extends TestCase
     /**
      * Post tags must be array validations.
      */
-    public function test_post_request_tags_must_be_in_database_validations()
+    public function test_post_request_tags_must_be_array_validations()
     {
         $user = User::factory()->admin()->create();
         $data = ['tags' => 'lord'];
 
         $errors = [
             "tags" => 'The tags must be an array.',
+        ];
+
+        $post =  Post::factory()
+            ->state(['user_id' => $user->id])
+            ->create();
+
+        // store
+        $this->actingAs($user)
+            ->post(route('posts.store'), $data)
+            ->assertSessionHasErrors($errors);
+
+        // update
+        $this->actingAs($user)
+            ->put(route('posts.update', $post), $data)
+            ->assertSessionHasErrors($errors);
+    }
+
+    /**
+     * Post tags must be in database validations.
+     */
+    public function test_post_request_tags_must_be_in_database_validations()
+    {
+        $user = User::factory()->admin()->create();
+        $data = ['tags' => [0]];
+
+        $errors = [
+            "tags.0" => 'The selected tags.0 is invalid.',
         ];
 
         $post =  Post::factory()
