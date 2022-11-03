@@ -169,4 +169,31 @@ class PostsControllerTest extends TestCase
             ->put(route('posts.update', $post), $data)
             ->assertSessionHasErrors($errors);
     }
+
+    /**
+     * Post required validations.
+     */
+    public function test_post_request_description_min_validations()
+    {
+        $user = User::factory()->admin()->create();
+        $data = ['description' => 'lord'];
+
+        $errors = [
+            "description" => 'The description must be at least 5 characters.',
+        ];
+
+        $post =  Post::factory()
+            ->state(['user_id' => $user->id])
+            ->create();
+
+        // store
+        $this->actingAs($user)
+            ->post(route('posts.store'), $data)
+            ->assertSessionHasErrors($errors);
+
+        // update
+        $this->actingAs($user)
+            ->put(route('posts.update', $post), $data)
+            ->assertSessionHasErrors($errors);
+    }
 }

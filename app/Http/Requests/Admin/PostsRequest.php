@@ -25,7 +25,7 @@ class PostsRequest extends FormRequest
     {
         return [
             "title" => 'required',
-            "description" => 'required',
+            "description" => 'required|min:5',
             "image" => 'required',
             "tags" => 'required'
         ];
