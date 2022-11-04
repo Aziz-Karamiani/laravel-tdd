@@ -16,7 +16,7 @@ class PostsImageUploadController extends Controller
     public function upload(Request $request)
     {
         $image = $request->file('image');
-        $image->move(storage_path("app/public/upload/posts/"), $image->hashName());
-        return response()->json(['image' => 'post image uploaded successfully']);
+        $image->move(public_path("storage/upload/posts/"), $image->hashName());
+        return response()->json(['url' => public_path("storage/upload/posts/{$image->hashName()}")]);
     }
 }

@@ -28,8 +28,8 @@ class UploadPostImageTest extends TestCase
 
         $response
             ->assertOk()
-            ->assertJson(['image' => 'post image uploaded successfully']);
+            ->assertJson(['url' => public_path("storage/upload/posts/{$image->hashName()}")]);
 
-        $this->assertFileExists(storage_path("app/public/upload/posts/{$image->hashName()}"));
+        $this->assertFileExists(public_path("storage/upload/posts/{$image->hashName()}"));
     }
 }
