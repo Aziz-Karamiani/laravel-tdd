@@ -70,4 +70,22 @@ class UploadPostImageTest extends TestCase
 
         $this->assertFileDoesNotExist(public_path("storage/upload/posts/{$image->hashName()}"));
     }
+
+
+    /**
+     * Upload post image validation dimensions:min_width=100,min_height=200.
+     *
+     * @return void
+     */
+    public function test_upload_post_image_dimension_validation()
+    {
+        $image = UploadedFile::fake()->image('image.txt', 101, 201)->size(200);
+        $this->actingAs(User::factory()->admin()->create());
+
+        $response = $this->postJson('/upload', ['image' => $image,]);
+
+        $response->assertJsonValidationErrors(['image' => 'The image has invalid image dimensions.']);
+
+        $this->assertFileDoesNotExist(public_path("storage/upload/posts/{$image->hashName()}"));
+    }
 }
