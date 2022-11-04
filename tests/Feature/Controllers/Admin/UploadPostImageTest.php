@@ -35,4 +35,22 @@ class UploadPostImageTest extends TestCase
         $this->assertFileExists(public_path("storage/upload/posts/{$image->hashName()}"));
         $this->assertEquals($this->middleware, request()->route()->middleware());
     }
+
+
+    /**
+     * Upload post image validation must be image.
+     *
+     * @return void
+     */
+    public function test_upload_post_image_must_be_image_validation()
+    {
+        $image = UploadedFile::fake()->create('image.txt');
+        $this->actingAs(User::factory()->admin()->create());
+
+        $response = $this->postJson('/upload', ['image' => $image,]);
+
+        $response->assertJsonValidationErrors(['image' => 'The image must be an image.']);
+
+        $this->assertFileDoesNotExist(public_path("storage/upload/posts/{$image->hashName()}"));
+    }
 }
