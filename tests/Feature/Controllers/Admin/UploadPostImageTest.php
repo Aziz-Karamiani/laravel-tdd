@@ -53,4 +53,21 @@ class UploadPostImageTest extends TestCase
 
         $this->assertFileDoesNotExist(public_path("storage/upload/posts/{$image->hashName()}"));
     }
+
+    /**
+     * Upload post image validation max file size is 350kb.
+     *
+     * @return void
+     */
+    public function test_upload_post_image_size_less_than_250kb_validation()
+    {
+        $image = UploadedFile::fake()->create('image.txt', 251);
+        $this->actingAs(User::factory()->admin()->create());
+
+        $response = $this->postJson('/upload', ['image' => $image,]);
+
+        $response->assertJsonValidationErrors(['image' => 'The image must not be greater than 250 kilobytes.']);
+
+        $this->assertFileDoesNotExist(public_path("storage/upload/posts/{$image->hashName()}"));
+    }
 }

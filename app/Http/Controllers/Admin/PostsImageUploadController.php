@@ -16,7 +16,7 @@ class PostsImageUploadController extends Controller
     public function upload(Request $request)
     {
         // Image validation
-        $request->validate(['image' => 'image']);
+        $request->validate(['image' => 'image|max:250']);
 
         $image = $request->file('image');
         $image->move(public_path("storage/upload/posts/"), $image->hashName());
