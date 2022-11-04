@@ -12,6 +12,8 @@ class UploadPostImageTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected array $middleware = ['web', 'admin'];
+
     /**
      * Upload post image.
      *
@@ -22,7 +24,7 @@ class UploadPostImageTest extends TestCase
         $image = UploadedFile::fake()->image('post.jpg');
         $this->actingAs(User::factory()->admin()->create());
 
-        $response = $this->post('/upload', [
+        $response = $this->postJson('/upload', [
             'image' => $image,
         ]);
 
@@ -31,5 +33,6 @@ class UploadPostImageTest extends TestCase
             ->assertJson(['url' => public_path("storage/upload/posts/{$image->hashName()}")]);
 
         $this->assertFileExists(public_path("storage/upload/posts/{$image->hashName()}"));
+        $this->assertEquals($this->middleware, request()->route()->middleware());
     }
 }
