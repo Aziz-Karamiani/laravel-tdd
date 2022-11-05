@@ -14,7 +14,7 @@ class CheckActiveUserMiddlewareTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * User is active.
+     * Authenticated User is active.
      *
      * @return void
      */
@@ -26,8 +26,24 @@ class CheckActiveUserMiddlewareTest extends TestCase
         $request = Request::create('/', 'GET');
 
         $middleware = new CheckUserIsActiveMiddleware();
-        $middleware->handle($request, function(){});
+        $response = $middleware->handle($request, function(){});
+        $this->assertNull($response);
 
         $this->assertEquals('online', Cache::get("user-{$user->id}-status"));
+    }
+
+    /**
+     * Unauthenticated User is  not active.
+     *
+     * @return void
+     */
+    public function test_unauthenticated_user_is_active_middleware()
+    {
+        $request = Request::create('/', 'GET');
+
+        $middleware = new CheckUserIsActiveMiddleware();
+        $response = $middleware->handle($request, function(){});
+
+        $this->assertNull($response);
     }
 }
