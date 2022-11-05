@@ -30,6 +30,9 @@ class CheckActiveUserMiddlewareTest extends TestCase
         $this->assertNull($response);
 
         $this->assertEquals('online', Cache::get("user-{$user->id}-status"));
+
+        $this->travel(11)->seconds();
+        $this->assertEquals(null, Cache::get("user-{$user->id}-status"));
     }
 
     /**
