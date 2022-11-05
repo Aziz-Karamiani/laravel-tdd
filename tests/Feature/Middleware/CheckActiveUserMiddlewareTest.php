@@ -46,4 +46,13 @@ class CheckActiveUserMiddlewareTest extends TestCase
 
         $this->assertNull($response);
     }
+
+    /**
+     * Active user middleware check
+     */
+    public function test_check_active_status_middleware_apply_to_all_route()
+    {
+        $this->get('/');
+        $this->assertEquals(['web'], request()->route()->middleware());
+    }
 }
