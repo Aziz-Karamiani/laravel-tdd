@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\TextReadingDuration;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -35,5 +36,14 @@ class Post extends Model
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    /**
+     * @return float|int
+     */
+    public function getReadingDurationAttribute()
+    {
+        $duration = new TextReadingDuration($this->description);
+        return $duration->getTextReadingDurationPerSeconds();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Controllers;
 
+use App\Helpers\TextReadingDuration;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
@@ -100,5 +101,18 @@ class PostsControllerTest extends TestCase
         $response = $this->postJson(route('posts.comments.store', ['post' => $post->id]), ['text' => $data['text']]);
 
         $response->assertJsonValidationErrors(['text' => 'The text field is required.']);
+    }
+
+
+    /**
+     * Post Reading Duration.
+     */
+    public function test_post_reading_duration()
+    {
+        $post = Post::factory()->create();
+        $duration = new TextReadingDuration($post->description);
+
+        $this->assertEquals($duration->getTextReadingDurationPerSeconds(), $post->readingDuration);
+        $this->assertEquals($duration->getTextReadingDurationPerMinutes(), $post->readingDuration / 60);
     }
 }
