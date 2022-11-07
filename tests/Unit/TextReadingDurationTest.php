@@ -16,7 +16,8 @@ class TextReadingDurationTest extends TestCase
     {
         $text = "This is a post description.";
 
-        $duration = new TextReadingDuration($text);
+        $duration = new TextReadingDuration();
+        $duration->setText($text);
 
         $this->assertEquals(5, $duration->getTextReadingDurationPerSeconds());
         $this->assertEquals(5 / 60, $duration->getTextReadingDurationPerMinutes());

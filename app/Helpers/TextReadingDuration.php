@@ -5,17 +5,16 @@ namespace App\Helpers;
 class TextReadingDuration
 {
     private int $baseDurationPerWord = 1;
-    private int $textWordCount;
     private int $duration;
 
     /**
      * TextReadingDuration constructor.
      * @param string $text
      */
-    public function __construct(string $text)
+    public function setText(string $text)
     {
-        $this->textWordCount = count(explode(' ', $text));
-        $this->duration = $this->textWordCount * $this->baseDurationPerWord;
+        $textWordCount = count(explode(' ', $text));
+        $this->duration = $textWordCount * $this->baseDurationPerWord;
     }
 
     public function getTextReadingDurationPerSeconds()

@@ -110,7 +110,8 @@ class PostsControllerTest extends TestCase
     public function test_post_reading_duration()
     {
         $post = Post::factory()->create();
-        $duration = new TextReadingDuration($post->description);
+        $duration = new TextReadingDuration();
+        $duration->setText($post->description);
 
         $this->assertEquals($duration->getTextReadingDurationPerSeconds(), $post->readingDuration);
         $this->assertEquals($duration->getTextReadingDurationPerMinutes(), $post->readingDuration / 60);

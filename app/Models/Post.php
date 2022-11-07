@@ -43,7 +43,8 @@ class Post extends Model
      */
     public function getReadingDurationAttribute()
     {
-        $duration = new TextReadingDuration($this->description);
+        $duration = new TextReadingDuration();
+        $duration->setText($this->description);
         return $duration->getTextReadingDurationPerSeconds();
     }
 }
