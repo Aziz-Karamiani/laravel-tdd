@@ -25,6 +25,7 @@ services:
         depends_on:
             - mysql
             - redis
+            - selenium
     mysql:
         image: 'mysql/mysql-server:8.0'
         ports:
@@ -57,6 +58,12 @@ services:
             test: ["CMD", "redis-cli", "ping"]
             retries: 3
             timeout: 5s
+    selenium:
+        image: 'selenium/standalone-chrome'
+        volumes:
+            - '/dev/shm:/dev/shm'
+        networks:
+            - sail
 networks:
     sail:
         driver: bridge
