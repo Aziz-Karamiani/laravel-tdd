@@ -14,7 +14,7 @@ class TextReadingDurationTest extends TestCase
      */
     public function test_reading_text_duration()
     {
-        $text = "This is a post description.";
+        $text = 'This is a post description.';
 
         $duration = new TextReadingDuration();
         $duration->setText($text);

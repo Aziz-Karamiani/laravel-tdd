@@ -24,11 +24,11 @@ class PostsRequest extends FormRequest
     public function rules()
     {
         return [
-            "title" => 'required',
-            "description" => 'required|min:5',
-            "image" => 'required',
-            "tags" => 'required|array',
-            "tags.*" => 'exists:tags,id',
+            'title' => 'required',
+            'description' => 'required|min:5',
+            'image' => 'required',
+            'tags' => 'required|array',
+            'tags.*' => 'exists:tags,id',
 
         ];
     }

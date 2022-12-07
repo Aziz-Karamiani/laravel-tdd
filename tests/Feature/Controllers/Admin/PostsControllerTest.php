@@ -72,12 +72,11 @@ class PostsControllerTest extends TestCase
             ->assertViewIs('posts.edit')
             ->assertViewHasAll([
                 'tags' => Tag::all(),
-                'post' => $post
+                'post' => $post,
             ]);
 
         $this->assertEquals($this->middleware, request()->route()->middleware());
     }
-
 
     /**
      * Posts store method.
@@ -100,7 +99,6 @@ class PostsControllerTest extends TestCase
             ->assertRedirect()
             ->assertSessionHas('message', 'Post created successfully.');
 
-
         $this->assertDatabaseHas('posts', $data)
             ->assertEquals($tags->pluck('id')->toArray(), Post::where($data)->first()->tags()->pluck('id')->toArray());
 
@@ -122,7 +120,7 @@ class PostsControllerTest extends TestCase
             ->make()
             ->toArray();
 
-        $post =  Post::factory()
+        $post = Post::factory()
             ->state(['user_id' => $user->id])
             ->create();
 
@@ -132,13 +130,11 @@ class PostsControllerTest extends TestCase
             ->assertRedirect()
             ->assertSessionHas('message', 'Post updated successfully.');
 
-
         $this->assertDatabaseHas('posts', array_merge(['id' => $post->id], $data))
             ->assertEquals($tags->pluck('id')->toArray(), Post::where($data)->first()->tags()->pluck('id')->toArray());
 
         $this->assertEquals($this->middleware, request()->route()->middleware());
     }
-
 
     /**
      * Post required validations.
@@ -149,13 +145,13 @@ class PostsControllerTest extends TestCase
         $data = [];
 
         $errors = [
-            "title" => 'The title field is required.',
-            "description" => 'The description field is required.',
-            "image" => 'The image field is required.',
-            "tags" => 'The tags field is required.'
+            'title' => 'The title field is required.',
+            'description' => 'The description field is required.',
+            'image' => 'The image field is required.',
+            'tags' => 'The tags field is required.',
         ];
 
-        $post =  Post::factory()
+        $post = Post::factory()
             ->state(['user_id' => $user->id])
             ->create();
 
@@ -181,10 +177,10 @@ class PostsControllerTest extends TestCase
         $data = ['description' => 'lord'];
 
         $errors = [
-            "description" => 'The description must be at least 5 characters.',
+            'description' => 'The description must be at least 5 characters.',
         ];
 
-        $post =  Post::factory()
+        $post = Post::factory()
             ->state(['user_id' => $user->id])
             ->create();
 
@@ -210,10 +206,10 @@ class PostsControllerTest extends TestCase
         $data = ['tags' => 'lord'];
 
         $errors = [
-            "tags" => 'The tags must be an array.',
+            'tags' => 'The tags must be an array.',
         ];
 
-        $post =  Post::factory()
+        $post = Post::factory()
             ->state(['user_id' => $user->id])
             ->create();
 
@@ -239,10 +235,10 @@ class PostsControllerTest extends TestCase
         $data = ['tags' => [0]];
 
         $errors = [
-            "tags.0" => 'The selected tags.0 is invalid.',
+            'tags.0' => 'The selected tags.0 is invalid.',
         ];
 
-        $post =  Post::factory()
+        $post = Post::factory()
             ->state(['user_id' => $user->id])
             ->create();
 
@@ -258,7 +254,6 @@ class PostsControllerTest extends TestCase
 
         $this->assertEquals($this->middleware, request()->route()->middleware());
     }
-
 
     public function test_destroy_post()
     {

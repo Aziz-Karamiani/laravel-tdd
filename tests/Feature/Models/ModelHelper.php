@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Tests\Feature\Models;
-
 
 use Illuminate\Database\Eloquent\Model;
 

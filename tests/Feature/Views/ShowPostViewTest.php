@@ -11,6 +11,7 @@ use Tests\TestCase;
 class ShowPostViewTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
      * A basic feature test example.
      *

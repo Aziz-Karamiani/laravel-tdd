@@ -45,6 +45,7 @@ class Post extends Model
     {
         $duration = new TextReadingDuration();
         $duration->setText($this->description);
+
         return $duration->getTextReadingDurationPerSeconds();
     }
 }

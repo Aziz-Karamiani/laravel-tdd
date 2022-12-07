@@ -7,12 +7,12 @@ use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class PostsControllerTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
      * A basic feature test example.
      *
@@ -30,7 +30,7 @@ class PostsControllerTest extends TestCase
         $response->assertViewIs('posts.show');
         $response->assertViewHasAll([
             'post' => $post,
-            'comments' => $post->comments()->latest()->paginate(10)
+            'comments' => $post->comments()->latest()->paginate(10),
         ]);
     }
 
@@ -45,7 +45,7 @@ class PostsControllerTest extends TestCase
         $data = Comment::factory()
             ->state([
                 'user_id' => $user->id,
-                'commentable_id' => $post->id
+                'commentable_id' => $post->id,
             ])
             ->make()
             ->toArray();
@@ -58,7 +58,6 @@ class PostsControllerTest extends TestCase
         $this->assertDatabaseHas('comments', $data);
     }
 
-
     /**
      * A basic feature test for noun authenticated user can't comment on post.
      */
@@ -68,7 +67,7 @@ class PostsControllerTest extends TestCase
 
         $data = Comment::factory()
             ->state([
-                'commentable_id' => $post->id
+                'commentable_id' => $post->id,
             ])
             ->make()
             ->toArray();
@@ -91,7 +90,7 @@ class PostsControllerTest extends TestCase
             ->state([
                 'user_id' => $user->id,
                 'commentable_id' => $post->id,
-                'text' => ''
+                'text' => '',
             ])
             ->make()
             ->toArray();
@@ -102,7 +101,6 @@ class PostsControllerTest extends TestCase
 
         $response->assertJsonValidationErrors(['text' => 'The text field is required.']);
     }
-
 
     /**
      * Post Reading Duration.

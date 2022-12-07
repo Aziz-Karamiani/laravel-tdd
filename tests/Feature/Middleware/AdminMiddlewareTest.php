@@ -11,6 +11,7 @@ use Tests\TestCase;
 class AdminMiddlewareTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
      * A normal user can not access to admin routes.
      *
@@ -24,7 +25,8 @@ class AdminMiddlewareTest extends TestCase
         $request = Request::create('/admin', 'GET');
 
         $middleware = new CheckIsAdminMiddleware();
-        $response = $middleware->handle($request, function(){});
+        $response = $middleware->handle($request, function () {
+        });
 
         $this->assertEquals(302, $response->getStatusCode());
     }
@@ -42,7 +44,8 @@ class AdminMiddlewareTest extends TestCase
         $request = Request::create('/admin', 'GET');
 
         $middleware = new CheckIsAdminMiddleware();
-        $response = $middleware->handle($request, function(){});
+        $response = $middleware->handle($request, function () {
+        });
 
         $this->assertEquals(null, $response);
     }
@@ -57,7 +60,8 @@ class AdminMiddlewareTest extends TestCase
         $request = Request::create('/admin', 'GET');
 
         $middleware = new CheckIsAdminMiddleware();
-        $response = $middleware->handle($request, function(){});
+        $response = $middleware->handle($request, function () {
+        });
 
         $this->assertEquals(302, $response->getStatusCode());
     }

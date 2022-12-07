@@ -26,7 +26,8 @@ class CheckActiveUserMiddlewareTest extends TestCase
         $request = Request::create('/', 'GET');
 
         $middleware = new CheckUserIsActiveMiddleware();
-        $response = $middleware->handle($request, function(){});
+        $response = $middleware->handle($request, function () {
+        });
         $this->assertNull($response);
 
         $this->assertEquals('online', Cache::get("user-{$user->id}-status"));
@@ -45,7 +46,8 @@ class CheckActiveUserMiddlewareTest extends TestCase
         $request = Request::create('/', 'GET');
 
         $middleware = new CheckUserIsActiveMiddleware();
-        $response = $middleware->handle($request, function(){});
+        $response = $middleware->handle($request, function () {
+        });
 
         $this->assertNull($response);
     }

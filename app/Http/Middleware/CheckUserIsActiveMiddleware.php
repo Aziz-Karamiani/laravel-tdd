@@ -13,16 +13,16 @@ class CheckUserIsActiveMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
+     * @param  Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return Response|RedirectResponse
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->check()){
+        if (auth()->check()) {
             $id = auth()->id();
-            Cache::remember("user-{$id}-status", 10, function(){
-               return "online";
+            Cache::remember("user-{$id}-status", 10, function () {
+                return 'online';
             });
         }
 

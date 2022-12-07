@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 class PostsCommentsController extends Controller
 {
     /**
-     * @param Request $request
-     * @param Post $post
+     * @param  Request  $request
+     * @param  Post  $post
      * @return JsonResponse
      */
     public function store(Request $request, Post $post)

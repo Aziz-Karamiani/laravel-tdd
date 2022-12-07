@@ -39,15 +39,15 @@ class PostsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param PostsRequest $request
+     * @param  PostsRequest  $request
      * @return RedirectResponse
      */
     public function store(PostsRequest $request)
     {
         $post = auth()->user()->posts()->create([
-           'title' => $request->input('title'),
-           'description' => $request->input('description'),
-           'image' => $request->input('image'),
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'image' => $request->input('image'),
         ]);
 
         $post->tags()->attach($request->input('tags'));
@@ -58,19 +58,20 @@ class PostsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Post $post
+     * @param  Post  $post
      * @return Application|Factory|View|void
      */
     public function show(Post $post)
     {
         $comments = $post->comments()->latest()->paginate(10);
+
         return view('posts.show', compact('post', 'comments'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Post $post
+     * @param  Post  $post
      * @return Application|Factory|View
      */
     public function edit(Post $post)
@@ -83,8 +84,8 @@ class PostsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param PostsRequest $request
-     * @param Post $post
+     * @param  PostsRequest  $request
+     * @param  Post  $post
      * @return RedirectResponse
      */
     public function update(PostsRequest $request, Post $post)
@@ -103,7 +104,7 @@ class PostsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Post $post
+     * @param  Post  $post
      * @return RedirectResponse
      */
     public function destroy(Post $post)
@@ -111,6 +112,7 @@ class PostsController extends Controller
         $post->tags()->detach();
         $post->comments()->delete();
         $post->delete();
+
         return redirect()->route('posts.index')->with('message', 'Post deleted successfully.');
     }
 }

@@ -5,7 +5,6 @@ namespace Tests\Feature\Controllers\Admin;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class UploadPostImageTest extends TestCase
@@ -36,7 +35,6 @@ class UploadPostImageTest extends TestCase
         $this->assertEquals($this->middleware, request()->route()->middleware());
     }
 
-
     /**
      * Upload post image validation must be image.
      *
@@ -47,7 +45,7 @@ class UploadPostImageTest extends TestCase
         $image = UploadedFile::fake()->create('image.txt');
         $this->actingAs(User::factory()->admin()->create());
 
-        $response = $this->postJson('/upload', ['image' => $image,]);
+        $response = $this->postJson('/upload', ['image' => $image]);
 
         $response->assertJsonValidationErrors(['image' => 'The image must be an image.']);
 
@@ -64,13 +62,12 @@ class UploadPostImageTest extends TestCase
         $image = UploadedFile::fake()->create('image.txt', 251);
         $this->actingAs(User::factory()->admin()->create());
 
-        $response = $this->postJson('/upload', ['image' => $image,]);
+        $response = $this->postJson('/upload', ['image' => $image]);
 
         $response->assertJsonValidationErrors(['image' => 'The image must not be greater than 250 kilobytes.']);
 
         $this->assertFileDoesNotExist(public_path("storage/upload/posts/{$image->hashName()}"));
     }
-
 
     /**
      * Upload post image validation dimensions:min_width=100,min_height=200.
@@ -82,7 +79,7 @@ class UploadPostImageTest extends TestCase
         $image = UploadedFile::fake()->image('image.txt', 101, 201)->size(200);
         $this->actingAs(User::factory()->admin()->create());
 
-        $response = $this->postJson('/upload', ['image' => $image,]);
+        $response = $this->postJson('/upload', ['image' => $image]);
 
         $response->assertJsonValidationErrors(['image' => 'The image has invalid image dimensions.']);
 

@@ -4,7 +4,6 @@ namespace Tests\Feature\Views;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class HomepageViewTest extends TestCase
@@ -24,7 +23,6 @@ class HomepageViewTest extends TestCase
         $view = $this->view('home');
         $view->assertSee('<a href="/admin/dashboard" class="btn btn-primary">Admin Dashboard</a>', false);
     }
-
 
     /**
      * A basic feature test example.

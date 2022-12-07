@@ -20,7 +20,6 @@ class UsersTest extends TestCase
         return new User();
     }
 
-
     /**
      * User has many posts.
      *
@@ -37,20 +36,4 @@ class UsersTest extends TestCase
         $this->assertCount($count, $user->posts);
         $this->assertTrue($user->posts->first() instanceof Post);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

@@ -5,11 +5,13 @@ namespace App\Helpers;
 class TextReadingDuration
 {
     private int $baseDurationPerWord = 1;
+
     private int $duration;
 
     /**
      * TextReadingDuration constructor.
-     * @param string $text
+     *
+     * @param  string  $text
      */
     public function setText(string $text)
     {

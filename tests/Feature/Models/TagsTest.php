@@ -20,7 +20,6 @@ class TagsTest extends TestCase
         return new Tag();
     }
 
-
     /**
      * Tags belongs to many posts.
      *

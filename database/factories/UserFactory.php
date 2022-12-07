@@ -51,7 +51,6 @@ class UserFactory extends Factory
         ]);
     }
 
-
     /**
      * Indicate that the model's type is admin.
      *
